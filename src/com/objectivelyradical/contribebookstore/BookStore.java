@@ -3,7 +3,7 @@ package com.objectivelyradical.contribebookstore;
 import java.util.HashMap;
 
 public class BookStore implements BookList{
-	private HashMap<Book, Integer> inventory = new HashMap<Book, Integer>();
+	
 	{
 	}
 
