@@ -9,8 +9,13 @@ public class BookInventory implements BookList{
 	@Override
 	public Book[] list(String searchString) {
 		HashSet<Book> books = new HashSet<Book>(inventory.keySet());
-		books.removeIf(b -> !b.getTitle().toUpperCase().contains(searchString.toUpperCase()) 
-				&& !b.getAuthor().toUpperCase().contains(searchString.toUpperCase()));
+		
+		// Because we need to be able to display all the books, but our interface does not allow us a separate method,
+		// we will instead say that a null search is for everything.
+		if(searchString.length() > 0) {
+			books.removeIf(b -> !b.getTitle().toUpperCase().contains(searchString.trim().toUpperCase()) 
+					&& !b.getAuthor().toUpperCase().contains(searchString.trim().toUpperCase()));
+		}
 		
 		return books.toArray(new Book[books.size()]);
 		

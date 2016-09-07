@@ -62,6 +62,9 @@ public class BookInventoryTest {
 		
 		results = inventory.list("Hark! A Unit Test!");
 		assert(results.length == 1);
+		
+		results = inventory.list("");
+		assert(results.length == 10);
 	}
 	
 	@Test

@@ -66,7 +66,7 @@ public class Main {
 	
 	private static void searchScreen() {
 		boolean emptyResults = false;
-		String rawSearch = "";
+		String searchString = "";
 		while(true) {
 			clear();
 			System.out.println("+++++++++++++++++++++++++");
@@ -74,18 +74,16 @@ public class Main {
 			System.out.println("+++++++++++++++++++++++++");
 			System.out.println("");
 			if(emptyResults) {
-				System.out.println("No results found for \"" + rawSearch + "\".");
+				System.out.println("No results found for \"" + searchString + "\".");
 			}
 			System.out.println("Enter your search term. Press ENTER when finished. Enter \"<\" to return to the main menu.");
 			System.out.println("");
 			System.out.println("Search: ");
 			
-			rawSearch = s.next();
-			String searchString = s.next().trim().toUpperCase();
+			// This looks pointless, but it prevents an overread so we can detect an empty search
+			s = new Scanner(System.in);
+			searchString = s.nextLine();
 			if(searchString.equals("<")) {
-				return;
-			}
-			if(searchString.equals(System.lineSeparator())) {
 				return;
 			}
 			Book[] books = bookStore.search(searchString);
@@ -99,7 +97,9 @@ public class Main {
 				System.out.println("++++++++++++++++++++++++");
 				System.out.println("+    SEARCH RESULTS    +");
 				System.out.println("++++++++++++++++++++++++");
-				System.out.println("Results for '" + searchString + "':");
+				if(!searchString.isEmpty()) {
+					System.out.println("Results for '" + searchString + "':");
+				}
 				System.out.println("");
 				for(int i = 0; i < Math.min(10, books.length); i++) {
 					System.out.println((i + 1) + ") " + books[i].getTitle() + ", " + books[i].getAuthor() + ", " + books[i].getPrice());
@@ -179,6 +179,5 @@ public class Main {
 				return;
 			}
 		}
-		
 	}
 }
