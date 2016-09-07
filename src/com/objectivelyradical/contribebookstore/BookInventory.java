@@ -1,45 +1,65 @@
 package com.objectivelyradical.contribebookstore;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.HashSet;
 
 public class BookInventory implements BookList{
 	private HashMap<Book, Integer> inventory = new HashMap<Book, Integer>();
 
 	@Override
 	public Book[] list(String searchString) {
-		Set<Book> books = inventory.keySet();
-		books.removeIf(b -> !b.getTitle().contains(searchString) 
-				&& !b.getAuthor().contains(searchString));
-		return (Book[])books.toArray();
+		HashSet<Book> books = new HashSet<Book>(inventory.keySet());
+		books.removeIf(b -> !b.getTitle().toUpperCase().contains(searchString.toUpperCase()) 
+				&& !b.getAuthor().toUpperCase().contains(searchString.toUpperCase()));
+		
+		return books.toArray(new Book[books.size()]);
+		
 	}
 
 	@Override
 	public boolean add(Book book, int quantity) {
-		
-		// TODO: What do these return values represent?
-		
-		// Also, based on the status codes we should probably figure out if we are removing 0
-		// count books or not (looks like we're not, so it's not quite this simple)
+		// This method returns true if we successfully add the entry, false otherwise
+		if(book == null || quantity < 0) {
+			return false;
+		}
 		if(inventory.containsKey(book)) {
-			inventory.put(book, inventory.get(book) + quantity);
+			// Sanity check to ensure we are not setting an item with a negative stock count
+			int currentCount = Math.max(0, inventory.get(book));
+			inventory.put(book, currentCount + quantity);
 			return true;
 		} else {
 			inventory.put(book, quantity);
-			return false;
+			return true;
 		}
+	}
+	
+	public int getStock(Book book) {
+		return inventory.containsKey(book) ? inventory.get(book) : -1;
 	}
 
 	@Override
-	public int[] buy(Book... books) {
-		// TODO foreach 
+	public int[] buy(Book... books) { 
 		int[] results = new int[books.length];
 		for(int i = 0; i < books.length; i++) {
-			
+			results[i] = buy(books[i]);
 		}		
-		
 		return results;
+	}
+	
+	private int buy(Book book) {
+		if(!inventory.containsKey(book)) {
+			return PurchaseStatus.DOES_NOT_EXIST;
+		} else {
+			int count = inventory.get(book);
+			if(count > 0) {
+				// Quick sanity check to make sure we cannot ever go below 0 stock
+				int newCount = Math.max(inventory.get(book) -1, 0);
+				inventory.put(book,  newCount);
+				return PurchaseStatus.OK;
+			} else {
+				return PurchaseStatus.NOT_IN_STOCK;
+			}
+		}
 	}
 
 }

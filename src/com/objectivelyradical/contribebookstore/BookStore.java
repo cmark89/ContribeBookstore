@@ -1,28 +1,70 @@
 package com.objectivelyradical.contribebookstore;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.URL;
 
-public class BookStore implements BookList{
+// This is a simple implementation of our actual bookstore, and handles stock initialization and user interaction.
+// In an actual implementation, we would never have something quite so unpleasant to use.
+public class BookStore {
+	BookList inventory;
 	
-	{
+	public BookStore() {
+		this(null, null);
 	}
-
-	@Override
-	public Book[] list(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
+	public BookStore(String url, BookDataParser parser) {
+		inventory = new BookInventory();
+		if(!url.isEmpty() && parser != null) {
+			loadInitialBooks(url, parser);
+		}
 	}
-
-	@Override
-	public boolean add(Book book, int quantity) {
-		
-		// TODO Auto-generated method stub
-		return false;
+	
+	// In this case, we want the option to change our initial stock, so we hand the method a URL resource and a 
+	// parser that knows what to do with the data.
+	private void loadInitialBooks(String url, BookDataParser parser) {
+		try {
+			InputStreamReader isr = new InputStreamReader(new URL(url).openStream());
+			BufferedReader reader = new BufferedReader(isr);
+			
+			String line = "";
+			while((line = reader.readLine()) != null) {
+				Node<Book, Integer> node = parser.stringToBooks(line);
+				if(node != null) {
+					inventory.add(node.getFirstElement(), node.getSecondElement());
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-	@Override
+	
+	public Book[] search(String searchString) {
+		return inventory.list(searchString);
+	}
+	
+	// Because our bookstore is going to be freely used by both customers and employees,
+	// we're exposing a method to add new books to the store
+	public boolean addNewBook(String title, String author, String price, int quantity) {
+		if(title == null || title.isEmpty() || author == null || author.isEmpty() || 
+				price == null || price.isEmpty() || quantity <= 0) {
+			return false;
+		}
+		try {
+			Book book = new Book(title, author, new BigDecimal(price));
+			inventory.add(book, quantity);
+			return true;
+		} catch(NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	// This method just wraps the inventory's method
 	public int[] buy(Book... books) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+		return inventory.buy(books);
+	}
 }
