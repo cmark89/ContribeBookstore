@@ -3,6 +3,7 @@ package com.objectivelyradical.contribebookstore.core;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// The main book class is little more than getters and setters.
 public class Book {
 	private String title;
 	private String author;
