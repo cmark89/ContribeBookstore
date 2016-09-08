@@ -2,9 +2,9 @@ package com.objectivelyradical.contribebookstore.test;
 
 import org.junit.Test;
 
-import com.objectivelyradical.contribebookstore.Book;
 import com.objectivelyradical.contribebookstore.ExampleBookParser;
-import com.objectivelyradical.contribebookstore.Node;
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.utility.Node;
 
 public class ExampleBookParserTest {
 	@Test

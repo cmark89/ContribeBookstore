@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.objectivelyradical.contribebookstore.Book;
+import com.objectivelyradical.contribebookstore.core.Book;
 public class BookTest {
 
 	@Test

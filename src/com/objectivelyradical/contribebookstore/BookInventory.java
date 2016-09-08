@@ -3,6 +3,10 @@ package com.objectivelyradical.contribebookstore;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.core.BookList;
+import com.objectivelyradical.contribebookstore.core.PurchaseStatus;
+
 public class BookInventory implements BookList{
 	private HashMap<Book, Integer> inventory = new HashMap<Book, Integer>();
 

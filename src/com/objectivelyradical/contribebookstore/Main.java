@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Set;
+
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.core.PurchaseStatus;
 
 public class Main {
 	final static String DEFAULT_BOOK_URL = "http://www.contribe.se/bookstoredata/bookstoredata.txt";
@@ -13,6 +15,7 @@ public class Main {
 	static Scanner s;
 	
 	// The main class, which operates as a rudimentary front-end. It interacts only with the middleware-like BookStore class.
+	// This implementation is extremely naive, but it works.
 	public static void main(String[] args) {
 		bookStore = new BookStore(DEFAULT_BOOK_URL, new ExampleBookParser());	
 		
@@ -85,7 +88,7 @@ public class Main {
 			System.out.println("");
 			System.out.println("Search: ");
 			
-			// This looks pointless, but it prevents an overread so we can detect an empty search
+			// Calls like this look pointless, but they prevent overreads
 			s = new Scanner(System.in);
 			searchString = s.nextLine();
 			if(searchString.equals("<")) {
@@ -115,7 +118,6 @@ public class Main {
 				if(s.hasNextInt()) {
 					int next = s.nextInt();
 					if(next - 1 < books.length) {
-						//System.out.println("SELECTED " + books[next - 1].getTitle());
 						bookScreen(books[next - 1]);
 					}
 				} else if(s.hasNext()) {

@@ -1,5 +1,6 @@
-package com.objectivelyradical.contribebookstore;
+package com.objectivelyradical.contribebookstore.core;
 
+// Provided constants.
 public class PurchaseStatus {
 	public static final int OK = 0;
 	public static final int NOT_IN_STOCK = 1;

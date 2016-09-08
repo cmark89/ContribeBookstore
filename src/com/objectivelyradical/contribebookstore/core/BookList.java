@@ -1,5 +1,6 @@
-package com.objectivelyradical.contribebookstore;
+package com.objectivelyradical.contribebookstore.core;
 
+// Provided interface
 public interface BookList {
 	public Book[] list(String searchString);
 	public boolean add(Book book, int quantity);

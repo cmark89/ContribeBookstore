@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.objectivelyradical.contribebookstore.Book;
 import com.objectivelyradical.contribebookstore.BookInventory;
-import com.objectivelyradical.contribebookstore.PurchaseStatus;
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.core.PurchaseStatus;
 
 public class BookInventoryTest {
 	

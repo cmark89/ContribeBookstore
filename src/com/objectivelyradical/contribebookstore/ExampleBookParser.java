@@ -2,10 +2,13 @@ package com.objectivelyradical.contribebookstore;
 
 import java.math.BigDecimal;
 
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.core.BookDataParser;
+import com.objectivelyradical.contribebookstore.utility.Node;
+
 public class ExampleBookParser implements BookDataParser{
-	public ExampleBookParser() {
-	}
-	// Return a wrapper with a book, and the number to add
+	// This class takes a string and parses it into books. 
+	// Since we're implementing BookDataParser, it's easy to repurpose for new projects.
 	public Node<Book, Integer> stringToBooks(String s) {
 		String[] parts = s.split(";");
 		if(parts.length == 4) {

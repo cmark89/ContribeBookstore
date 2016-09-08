@@ -1,4 +1,4 @@
-package com.objectivelyradical.contribebookstore;
+package com.objectivelyradical.contribebookstore.core;
 
 import java.math.BigDecimal;
 import java.util.Objects;

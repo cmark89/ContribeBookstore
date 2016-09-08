@@ -6,8 +6,12 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 
+import com.objectivelyradical.contribebookstore.core.Book;
+import com.objectivelyradical.contribebookstore.core.BookDataParser;
+import com.objectivelyradical.contribebookstore.core.BookList;
+import com.objectivelyradical.contribebookstore.utility.Node;
+
 // This is a simple implementation of our actual bookstore, and handles stock initialization and user interaction.
-// In an actual implementation, we would never have something quite so unpleasant to use.
 public class BookStore {
 	BookList inventory;
 	
